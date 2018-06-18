@@ -5,12 +5,12 @@ import "./ArtonomousArtPieceToken.sol";
 
 contract Artonomous {
 
-    event ArtonomousAuctionStarted(uint indexed blockNumber, bytes32 generatorHashUsed);
-    event ArtonomousArtClaimed(address indexed claimant, uint indexed blockNumber, bytes32 generatorHashUsed);
+    event ArtonomousAuctionStarted(uint indexed blockNumber, string generatorHashUsed);
+    event ArtonomousArtClaimed(address indexed claimant, uint indexed blockNumber, string generatorHashUsed);
 
     struct Auction {
         uint blockNumber;
-        bytes32 generatorHash;
+        string generatorHash;
         uint endTime;
     }
 
@@ -26,7 +26,7 @@ contract Artonomous {
 
     function startAuction() external {
         require(currentAuction.blockNumber == 0);
-        bytes32 currentGeneratorHash = artonomousStaking.currentGeneratorHash();
+        string memory currentGeneratorHash = artonomousStaking.currentGeneratorHash();
         currentAuction = Auction({
             blockNumber: block.number,
             generatorHash: currentGeneratorHash,
@@ -38,7 +38,7 @@ contract Artonomous {
     // after 24 hours, anyone can claim for free
     function claimArt() external {
         uint blockNumber = currentAuction.blockNumber;
-        bytes32 generator = currentAuction.generatorHash; 
+        string storage generator = currentAuction.generatorHash; 
         require(blockNumber > 0);
         require(currentAuction.endTime < now);
 
