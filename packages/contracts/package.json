@@ -8,5 +8,11 @@
     "babel-preset-stage-2": "^6.24.1",
     "babel-preset-stage-3": "^6.24.1",
     "babel-register": "^6.26.0"
+  },
+  "dependencies": {
+    "openzeppelin-solidity": "1.10.0"
+  },
+  "scripts": {
+    "build": "truffle compile"
   }
 }
