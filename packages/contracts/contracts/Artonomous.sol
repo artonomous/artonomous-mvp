@@ -1,4 +1,4 @@
-pragma solidity ^0.4.23;
+pragma solidity ^0.4.24;
 
 import "./ArtonomousStaking.sol";
 import "./ArtonomousArtPieceToken.sol";
@@ -6,11 +6,10 @@ import "./ArtonomousArtPieceToken.sol";
 contract Artonomous {
 
     event ArtonomousAuctionStarted(uint indexed blockNumber, string generatorHashUsed);
-    event ArtonomousArtClaimed(address indexed claimant, uint indexed blockNumber, string generatorHashUsed);
+    event ArtonomousArtClaimed(address indexed claimant, uint indexed blockNumber);
 
     struct Auction {
         uint blockNumber;
-        string generatorHash;
         uint endTime;
     }
 
@@ -22,14 +21,15 @@ contract Artonomous {
     constructor(address stakingAddr) public {
         artonomousStaking = ArtonomousStaking(stakingAddr);
         pieceToken = new ArtonomousArtPieceToken("artonomous-token", "ARTO");
+        startAuction();
     }
 
-    function startAuction() external {
+    function startAuction() internal {
         require(currentAuction.blockNumber == 0);
         string memory currentGeneratorHash = artonomousStaking.currentGeneratorHash();
+        pieceToken.mint(this, block.number, currentGeneratorHash);
         currentAuction = Auction({
             blockNumber: block.number,
-            generatorHash: currentGeneratorHash,
             endTime: now + AUCTION_LENGTH
         });
         emit ArtonomousAuctionStarted(block.number, currentGeneratorHash);
@@ -38,14 +38,15 @@ contract Artonomous {
     // after 24 hours, anyone can claim for free
     function claimArt() external {
         uint blockNumber = currentAuction.blockNumber;
-        string storage generator = currentAuction.generatorHash; 
         require(blockNumber > 0);
         require(currentAuction.endTime < now);
 
-        pieceToken.mint(msg.sender, blockNumber, generator);
+        pieceToken.transferFrom(this, msg.sender, blockNumber);
 
         delete currentAuction;
 
-        emit ArtonomousArtClaimed(msg.sender, blockNumber, generator);
+        emit ArtonomousArtClaimed(msg.sender, blockNumber);
+
+        startAuction();
     }
 }
