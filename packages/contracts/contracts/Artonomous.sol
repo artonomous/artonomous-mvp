@@ -20,7 +20,7 @@ contract Artonomous {
     address public beneficiary; // receives ether gained from purchases
 
     uint public AUCTION_LENGTH = 86400; // 24 hours
-    Auction currentAuction;
+    Auction public currentAuction;
 
     constructor(address stakingAddr, address beneficiaryAddr) public {
         artonomousStaking = ArtonomousStaking(stakingAddr);
