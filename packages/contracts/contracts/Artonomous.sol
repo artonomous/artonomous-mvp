@@ -42,7 +42,7 @@ contract Artonomous {
     }
 
     // placeholder
-    function getStartingPrice() internal returns (uint) {
+    function getStartingPrice() internal pure returns (uint) {
         return 1000000000000;
     }
 
@@ -54,21 +54,21 @@ contract Artonomous {
         uint buyPrice = getBuyPrice(currentAuction.startingPrice);
         require(msg.value >= buyPrice);
 
-        uint remainder = msg.value - buyPrice;
-        transfer(msg.sender, remainder); // refund extra
-        transfer(beneficiary, remainder); // pay Artonomous' beneficiary
 
         pieceToken.transferFrom(this, msg.sender, blockNumber);
-
         delete currentAuction;
 
-        emit AronomousArtBought(msg.sender, blockNumber, buyPrice);
+        uint remainder = msg.value - buyPrice;
+        msg.sender.transfer(remainder); // refund extra
+        beneficiary.transfer(buyPrice); // pay Artonomous' beneficiary
+
+        emit ArtonomousArtBought(msg.sender, blockNumber, buyPrice);
 
         startAuction();
     }
 
     // placeholder
-    function getBuyPrice(uint startingPrice) internal returns (uint) {
+    function getBuyPrice(uint startingPrice) internal pure returns (uint) {
         return startingPrice;
     }
 
@@ -79,7 +79,6 @@ contract Artonomous {
         require(currentAuction.endTime <= now);
 
         pieceToken.transferFrom(this, msg.sender, blockNumber);
-
         delete currentAuction;
 
         emit ArtonomousArtClaimed(msg.sender, blockNumber);
