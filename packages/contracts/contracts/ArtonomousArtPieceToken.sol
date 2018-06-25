@@ -14,14 +14,6 @@ contract ArtonomousArtPieceToken is ERC721Token, Ownable {
     * @dev For returning the URL of the JSON object describing the token.
     * @return A string of the URL.
     */
-    function getGenerator(uint _block) public view returns (string generator) {
-        return generators[_block];
-    }
-`
-    /**
-    * @dev For returning the URL of the JSON object describing the token.
-    * @return A string of the URL.
-    */
     function tokenURI(uint _tokenId) public view returns (string _infoUrl) {
         address _impl = implementation();
         bytes memory data = msg.data;
