@@ -6,7 +6,7 @@ import "./Metadata.sol";
 
 contract ArtonomousArtPieceToken is ERC721Token, Ownable {
     address metadata;
-    mapping(uint => string) generators;
+    mapping(uint => string) public generators;
 
     constructor(string name, string symbol) public ERC721Token(name, symbol) {}
 
