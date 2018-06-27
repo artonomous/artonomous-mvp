@@ -1,6 +1,6 @@
 # Artonomous
 
-Artonomous is a self-sustaining, self-improving, autonomous artist. It generates art by itself, sells it and incentivizes humans to improve the art it creates. Owners of the art piece owns the scarce, immutable, collectible. This is implemented on the Ethereum blockchain.
+Artonomous is a self-sustaining, self-improving, autonomous artist. It generates art by itself, sells it and incentivizes humans to improve the art it creates. Owners of the art piece owns the scarce, immutable, collectible art. This is implemented on the Ethereum blockchain.
 
 ## Daily Art Auction
 
@@ -16,6 +16,7 @@ Besides being able to claim the ETH that the autonomous artist makes from sellin
 
 The proposed first iteration is this generator: https://mattdesl.svbtle.com/generative-art-with-nodejs-and-canvas.
 
+NOTE: There's currently a discussion on starting off with multiple generators. Please contribute -> https://github.com/simondlr/artonomous/issues/21.
 
 ## ERC721
 
@@ -29,9 +30,7 @@ This project can implemented all on the client side. It doesn't have to utilise 
 
 ## Help
 
-I've written about this art bot before and the time has come to implement it. Please help me build this as as fully open source. The issues present the work necessary. Feel free to pick up where you can.
-
-Bounties will soon be placed on this work in order to get it implemented.
+Thanks to everyone who has contributed thus far! The issues present the work necessary. Feel free to pick up where you can. I'll be writing a more extensive contributers guide soon.
 
 ## Licensing
 
