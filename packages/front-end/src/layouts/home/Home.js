@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { ContractData, ContractForm } from "drizzle-react-components";
+import { ContractData } from "drizzle-react-components";
+import NewContractForm from "./NewContractForm";
 
 class Home extends Component {
   render() {
@@ -31,11 +32,13 @@ class Home extends Component {
             <p>
               <strong>Current Auction</strong>:{" "}
               <ContractData contract="Artonomous" method="currentAuction" />
-              <ContractForm
+              <NewContractForm
                 contract="Artonomous"
                 method="buyArt"
-                methodArgs={[{ value: 1000000000000 }]}
-              />
+                methodArgs={{ value: "1000000000000" }}
+              >
+                Buy Art
+              </NewContractForm>
             </p>
           </div>
         </div>
