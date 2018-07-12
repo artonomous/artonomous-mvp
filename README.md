@@ -44,7 +44,7 @@ BANCOR formulas are used to derive the price of the tokens.
 
 Every art piece conforms to the ERC721 Non-Fungible Token standard allowing it to be easily sold and transferred.
 
-Every art piece contains two core components. The hash of the generator & its blockhash (as input) chosen at the start of the auction.
+Every art piece contains two core components. The hash of the generator & the block number of the start of its creation auction. Clients would use the block hash of that block as the input for the generator.
 
 ## Metadata
 
