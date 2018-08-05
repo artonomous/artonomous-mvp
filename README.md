@@ -76,6 +76,8 @@ The goal for the art bot is that it could run completely client-side: all implem
 
 ## Help & Contributing
 
+To install, you need Lerna. ```npm install -g lerna```. Then run: ```lerna bootstrap```.
+
 Thanks to everyone who has contributed thus far! The issues present the work necessary. Feel free to pick up where you can. I'll be writing a more extensive contributors guide soon.
 
 ## Licensing

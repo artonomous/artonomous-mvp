@@ -3,6 +3,7 @@ import { advanceEvmTime, configureChai } from "../scripts/testHelpers";
 
 const Artonomous = artifacts.require("Artonomous");
 const ArtonomousStaking = artifacts.require("ArtonomousStaking");
+const ArtonomousArtPieceToken = artifacts.require("ArtonomousArtPieceToken");
 
 configureChai(chai);
 const expect = chai.expect;
@@ -105,6 +106,17 @@ contract("Artonomous", accounts => {
       ).to.eventually.be.rejectedWith(
         "revert",
         "should not have allowed user to buy art 24 hours after initial auction finished and new one started"
+      );
+    });
+
+    it("fails if trying to mint from anyone else besides Artonomous", async() => {
+      const pieceTokenAddress = await artonomous.pieceToken.call();
+      const pieceTokenContract = ArtonomousArtPieceToken.at(pieceTokenAddress);
+      await expect(
+        pieceTokenContract.mint(100, "hash")
+      ).to.eventually.be.rejectedWith(
+        "revert",
+        "should not be allowed to mint artwork by anyone else besides artonomous"
       );
     });
   });

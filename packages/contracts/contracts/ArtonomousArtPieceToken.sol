@@ -1,14 +1,18 @@
-pragma solidity ^0.4.24;
+pragma solidity ^0.4.24; //solhint-disable-line compiler-fixed
 
 import "openzeppelin-solidity/contracts/token/ERC721/ERC721Token.sol";
 import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
 import "./Metadata.sol";
 
-contract ArtonomousArtPieceToken is ERC721Token, Ownable {
-    address metadata;
-    mapping(uint => string) public generators;
 
-    constructor(string name, string symbol) public ERC721Token(name, symbol) {}
+contract ArtonomousArtPieceToken is ERC721Token, Ownable {
+    address public metadata;
+    mapping(uint => string) public generators;
+    address public artonomous;
+
+    constructor(string name, string symbol) public ERC721Token(name, symbol) {
+        artonomous = msg.sender;
+    }
 
     /**
     * @dev For returning the URL of the JSON object describing the token.
@@ -47,8 +51,10 @@ contract ArtonomousArtPieceToken is ERC721Token, Ownable {
     /**
     * @dev Used to mint new artworks and log the generator used.
     */
-    function mint(address beneficiary, uint _block, string _generator) public {
-        _mint(beneficiary, _block);
-        generators[_block] = _generator;
+    function mint(uint _blocknumber, string _generator) public {
+        require(msg.sender == artonomous);
+        // blockNumber is the tokenId
+        _mint(artonomous, _blocknumber); // minted towards artonomous. It originally owns artwork until sold.
+        generators[_blocknumber] = _generator;
     }
 }
